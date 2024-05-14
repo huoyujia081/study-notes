@@ -17,5 +17,5 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: ls ${{ github.workspace }} | grep *.md | xargs write-good
+      - run: ls ${{ github.workspace }} | grep *.md | xargs proselint
 
