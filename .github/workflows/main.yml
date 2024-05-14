@@ -1,21 +1,34 @@
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
+name: 'Trigger: Push action'
 jobs:
-  hello_world_job:
+  write_good_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    permissions:
+      pull-requests: write
+    name: A job to lint Markdown files
     steps:
-      - name: Hello world action step
-        id: hello
-        uses: huoyujia081/study-notes@v1.1
-        with:
-          who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
-
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: ls ${{ github.workspace }} | grep *.md | xargs proselint
-
+    - uses: actions/checkout@v2
+    - name: write-good action step
+      id: write-good
+      uses: tomwhross/write-good-action@v1.6
+      # with:
+      #   directory: "manuscript" # Optional, uncomment to specify a directory to scan
+    # Use the output from the `write-good` step
+    - name: Get the write-good output
+      run: echo "${{ steps.write-good.outputs.result }}"
+    - name: Post comment
+      uses: mshick/add-pr-comment@v1
+      if: ${{ steps.write-good.outputs.result }}
+      with:
+        message: |
+          ${{ steps.write-good.outputs.result }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+        allow-repeats: false # This is the default
