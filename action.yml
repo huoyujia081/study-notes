@@ -1,5 +1,6 @@
-name: 'Hello World'
+name: 'inspect syntax'
 description: 'Greet someone and record the time'
+on: push
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
@@ -11,3 +12,9 @@ outputs:
 runs:
   using: 'node20'
   main: 'index.js'
+
+jobs:
+	Explore-GitHub-Actions:
+		runs-on: ubuntu-latest
+		steps:
+			- run: ls ${{ fithub.workspace }} | grep *.md | xargs write-good
