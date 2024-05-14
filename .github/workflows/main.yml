@@ -16,6 +16,6 @@ jobs:
 
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
-      steps:
-		- run: ls ${{ fithub.workspace }} | grep *.md | xargs write-good
+    steps:
+	  - run: ls ${{ fithub.workspace }} | grep *.md | xargs write-good
 
