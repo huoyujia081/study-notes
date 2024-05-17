@@ -1,2 +1,5 @@
 theme: jekyll-theme-cayman
 markdown: GFM
+title: study-notes
+description: there are all of my study notes for computer science.
+show_downloads: true
